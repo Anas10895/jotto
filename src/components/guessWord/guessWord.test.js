@@ -2,7 +2,6 @@ import React from 'react'
 import Enzyme,{shallow} from 'enzyme';
 import {findByTestAttr, checkProp} from '../../test/testUtil'
 import  GuessWord from './index'
-import Congrats from '../congrats'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -49,5 +48,31 @@ describe('if there are no words guessd', () => {
 })
 
 describe('if there are words guessd', () => {
+    let wrapper;
+    const guessedWords = [
+        {guessedWord : 'train', litterMatchCount : 3},
+        {guessedWord : 'agile', litterMatchCount : 1},
+        {guessedWord : 'party', litterMatchCount : 5},
+    ];
+    beforeEach( () => {
+        wrapper = setup({ guessedWords })
+
+   })
+    test('render wihout error', () => {
+        const component = findByTestAttr(wrapper, 'component-guessd-words')
+        expect(component.length).toBe(1)
+    });
+
+    test("renders 'guessedWord' section ", () => {
+        const guessedWordsNode = findByTestAttr(wrapper, 'guessd-words')
+        expect(guessedWordsNode.length).toBe(1);
+
+    });
+
+    test("correct number of guessed word", () => {
+        const guessedWordNodes = findByTestAttr(wrapper, 'guessd-word')
+        expect(guessedWordNodes.length).toBe(guessedWords.length)
+
+    });
     
 })
