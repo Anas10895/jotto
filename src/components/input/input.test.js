@@ -14,9 +14,9 @@ Enzyme.configure({ adapter: new Adapter() });
  * @returns {shallowWrapper} 
  */
 
-const secretWord="party"
 
-const setup = (props={}) => {
+
+const setup = (secretWord="party") => {
     return shallow(<Input secretWord={secretWord}/>)
 }
 test("render without error", () => {
@@ -28,3 +28,20 @@ test("render without error", () => {
 test('dose not throw error with unexpected props', () => {
     checkProp(Input, {secretWord:"test"})
 })
+
+describe('state controlled input field ', () => {
+
+    test('state update with value of the input field' , () => {
+        const mockCurrentGuess = jest.fn();
+        React.useState = jest.fn(() =>  ["" , mockCurrentGuess])
+
+        const warpper = setup();
+        const inputBox = findByTestAttr(warpper, "input-box");
+
+        const mockEvent = {target : {value: "train"}}
+        inputBox.simulate("change", mockEvent)
+
+        expect(mockCurrentGuess).toHaveBeenCalledWith('train')
+
+});
+});
