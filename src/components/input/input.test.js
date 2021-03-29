@@ -6,6 +6,12 @@ import Input from './index'
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const mockCurrentGuess = jest.fn();
+
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: (initialState) => [initialState, mockCurrentGuess]
+}))
 /**
  * 
  * Factory Function to create a Input  for Input Component 
@@ -32,7 +38,6 @@ test('dose not throw error with unexpected props', () => {
 describe('state controlled input field ', () => {
 
     test('state update with value of the input field' , () => {
-        const mockCurrentGuess = jest.fn();
         React.useState = jest.fn(() =>  ["" , mockCurrentGuess])
 
         const warpper = setup();
