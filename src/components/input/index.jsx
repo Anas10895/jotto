@@ -1,8 +1,11 @@
 import React,{useState} from 'react'
 import PropTypes from 'prop-types'
 
-const Input = ({secretWord}) => {
+const Input = ({success,secretWord}) => {
     const [currentGuess, setCurrentGuess] = useState("")
+    if(success){
+        return <div data-test="component-input"/>
+    }
     return (
         <div data-test="component-input">
             <form className="form-inline">
@@ -14,9 +17,15 @@ const Input = ({secretWord}) => {
                     value={currentGuess}
                     onChange={(event) => setCurrentGuess(event.target.value)}
                 />
-                <button data-test="submit-button" className="btn btn-primary mb-2">
+                {/* todo : update the state to show if the guess word is right or not */}
+                <button data-test="submit-button"
+                 className="btn btn-primary mb-2"
+                 onClick={() => {
+                  setCurrentGuess('');}}
+                >
                     Submit
                 </button>
+                
             </form>
         </div>
     )
