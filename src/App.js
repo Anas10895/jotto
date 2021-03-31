@@ -4,7 +4,7 @@ import GuessWord from './components/guessWord'
 import Gongrats from './components/congrats'
 function App() {
   return (
-    <div className="container">
+    <div data-test="app-component" className="container">
     <h1>Jotto</h1>
       <Gongrats success={true} />
       <GuessWord guessedWords={[   {guessedWord : 'train', litterMatchCount : 3},
